@@ -1,0 +1,12 @@
+.card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .highlight {
+    background-color: #e0f7fa;
+    border-color: #00bcd4;
+  }
