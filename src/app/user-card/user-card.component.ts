@@ -9,14 +9,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrl: './user-card.component.css'
 })
 export class UserCardComponent {
+ @Input() id!: number;
  @Input() name = 'Alex';
  @Input() age = 20;
  @Input() email = 'alex@gmail.com';
  
- @Output() onSelected = new EventEmitter<string>()
+ @Output() onSelected = new EventEmitter<number>()
 
   handleClick() {
-    this.onSelected.emit(this.name);
+    this.onSelected.emit(this.id);
   }
 
 }

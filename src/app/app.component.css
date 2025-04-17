@@ -1,0 +1,10 @@
+.grid {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+.grid div {
+  flex: 1;
+}

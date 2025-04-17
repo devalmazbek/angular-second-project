@@ -1,0 +1,17 @@
+.card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+.selected {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+}
+
+.highlighted {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+}

@@ -1,0 +1,7 @@
+<div (click)="handleClick()" [ngClass]="{ 'selected': isSelected, 'highlighted': highlighted }"  class="card" >
+    <p>{{ id }}</p>
+    <p>{{ name }}</p>
+    <p>{{ price }}</p>
+    <p>{{ description }}</p>
+    <button (click)="handleDeleteClick()">Remove</button>
+</div>

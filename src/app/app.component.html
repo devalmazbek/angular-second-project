@@ -62,14 +62,6 @@
   }
 
   main {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: inherit;
-    position: relative;
   }
 
   .angular-logo {
@@ -177,14 +169,63 @@
   }
 </style>
 <app-header></app-header>
-<main class="main">
-  <app-user-card
-  [name]="'Alex'"
-  [age]="28"
-  [email]="'Alex@example.com'"
-  (onSelected)="handleSelect($event)">
-</app-user-card>
+<main>
+  <section class="grid">
+    <div>
+      <h3>Пользователи:</h3>
+      <app-user-card
+        *ngFor="let user of users"
+        [id]="user.id"
+        [name]="user.name"
+        [age]="user.age"
+        [email]="user.email"
+        (onSelected)="handleSelect($event)">
+      </app-user-card>
+    </div>
+  
+    <div *ngIf="selectedUser as user">
+      <h3>Детали:</h3>
+      <app-user-card
+        [id]="user.id"
+        [name]="user.name"
+        [age]="user.age"
+        [email]="user.email">
+      </app-user-card>
+    </div>
+    <h5>All users: {{users.length}}</h5>
+  </section>
+  <section class="grid">
+    <div>
+      <h3>products:</h3>
+      <app-product-card
+        *ngFor="let product of products"
+        [id]="product.id"
+        [name]="product.name"
+        [price]="product.price"
+        [description]="product.description"
+        [highlighted]="product.highlighted"
+        [isSelected]="product.id === selectedProduct?.id"
+        (onSelected)="handleSelectProduct($event)"
+        (onDelete)="handleRemoveProduct($event)">
+    </app-product-card>
+    </div>
+  
+    <div *ngIf="selectedProduct as product">
+      <h3>Детали:</h3>
+      <app-product-card
+        [id]="product.id"
+        [name]="product.name"
+        [price]="product.price"
+        [description]="product.description">
+      </app-product-card>
+    </div>
+    <h5>All Products: {{products.length}}</h5>
+  </section>
+
+  <button (click)="handleHighlightAllProduct()">Выделить все товары</button>
+ 
 </main>
+
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
