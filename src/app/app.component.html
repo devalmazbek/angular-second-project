@@ -170,6 +170,9 @@
 </style>
 <app-header></app-header>
 <main>
+  <app-add-product
+  (onAddProduct)="handleAddProduct($event)">
+  </app-add-product>
   <section class="grid">
     <div>
       <h3>Пользователи:</h3>
@@ -179,7 +182,9 @@
         [name]="user.name"
         [age]="user.age"
         [email]="user.email"
-        (onSelected)="handleSelect($event)">
+        [isSelected]="selectedUserIds.includes(user.id)"
+        (onSelected)="handleSelect($event)"
+        (onToggleSelection)="handleToggleUserSelection($event)">
       </app-user-card>
     </div>
   
@@ -203,10 +208,13 @@
         [name]="product.name"
         [price]="product.price"
         [description]="product.description"
+        [clickCount]="product.clickCount"
         [highlighted]="product.highlighted"
         [isSelected]="product.id === selectedProduct?.id"
+        (onPickRandomProduct)="handleGuest($event)"
         (onSelected)="handleSelectProduct($event)"
-        (onDelete)="handleRemoveProduct($event)">
+        (onDelete)="handleRemoveProduct($event)"
+        (onClickCount)="handleClickCount($event)">
     </app-product-card>
     </div>
   
@@ -223,6 +231,10 @@
   </section>
 
   <button (click)="handleHighlightAllProduct()">Выделить все товары</button>
+
+  <button (click)="pickRandomProduct()">Начать игру "Угадай товар"</button>
+  <p *ngIf="targetProductId">Попробуй угадать товар 👀</p>
+  <p>{{ message }}</p>
  
 </main>
 

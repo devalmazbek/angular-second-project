@@ -6,7 +6,7 @@
     cursor: pointer;
   }
   
-  .highlight {
+  .selected {
     background-color: #e0f7fa;
     border-color: #00bcd4;
   }

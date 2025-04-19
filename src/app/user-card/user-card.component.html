@@ -1,4 +1,4 @@
-<div (click)="handleClick()" class="card">
+<div (click)="handleClick()" [ngClass]="{ 'selected': isSelected }" class="card">
   <p>{{ id }}</p>
   <h2>{{ name }}</h2>
   <p>Возраст: {{ age }}</p>

@@ -14,19 +14,31 @@ export class ProductCardComponent {
   @Input() name = '';
   @Input() price = 0;
   @Input() description = 'test';
+  @Input() clickCount = 0;
   @Input() isSelected = false;
   @Input() highlighted = false;
 
   @Output() onSelected = new EventEmitter<number>();
   @Output() onDelete = new EventEmitter<number>();
+  @Output() onClickCount = new EventEmitter<number>();
+  @Output() onAddProduct = new EventEmitter<{}>();
+  @Output() onPickRandomProduct = new EventEmitter<number>()
 
   handleClick() {
     this.onSelected.emit(this.id);
+    this.onClickCount.emit(this.id);
+    this.onPickRandomProduct.emit(this.id);
   }
 
   handleDeleteClick() {
     this.onDelete.emit(this.id);
   }
+
+  handleAddProduct() {
+    let id = 10;
+    const product = {} 
+  }
+
 
 
 }

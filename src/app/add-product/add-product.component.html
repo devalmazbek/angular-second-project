@@ -1,0 +1,9 @@
+<h3>Add product</h3>
+
+<form (ngSubmit)="submitForm()">
+  <input type="text" placeholder="Название" [(ngModel)]="name" name="name" required />
+  <input type="number" placeholder="Цена" [(ngModel)]="price" name="price" required />
+  <input type="text" placeholder="Описание" [(ngModel)]="description" name="description" />
+
+  <button type="submit">Добавить</button>
+</form>

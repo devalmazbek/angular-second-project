@@ -4,10 +4,11 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, HeaderComponent, UserCardComponent, ProductCardComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, UserCardComponent, ProductCardComponent, AddProductComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -17,6 +18,10 @@ export class AppComponent {
   highlightedAll = false;
 
   selectedProductId: number | null = null;
+  selectedUserIds: number[] = [];
+
+  targetProductId: number | null = null;
+  message: string = "";
 
   users = [
     { id: 1, name: 'Алия', age: 25, email: 'aliya@example.com' },
@@ -25,14 +30,14 @@ export class AppComponent {
   ];
 
   products = [
-    { id: 101, name: 'MacBook Air', price: 1299, description: '13-inch laptop from Apple', highlighted: false },
-    { id: 102, name: 'Dell XPS 15', price: 1499, description: 'Powerful Windows laptop', highlighted: false },
-    { id: 103, name: 'Lenovo ThinkPad', price: 999, description: 'Business class laptop', highlighted: false }
+    { id: 101, name: 'MacBook Air', price: 1299, description: '13-inch laptop from Apple', highlighted: false, clickCount: 0 },
+    { id: 102, name: 'Dell XPS 15', price: 1499, description: 'Powerful Windows laptop', highlighted: false, clickCount: 0 },
+    { id: 103, name: 'Lenovo ThinkPad', price: 999, description: 'Business class laptop', highlighted: false, clickCount: 0 },
   ];
 
   selectedUser: { id: number, name: string; age: number; email: string } | null = null;
 
-  selectedProduct: {id: number, name: string; price: number; description: string, highlighted: boolean} | null = null;
+  selectedProduct: {id: number, name: string; price: number; description: string, highlighted: boolean, clickCount: number} | null = null;
 
   handleSelect(id: number) {
     const user = this.users.find(u => u.id === id);
@@ -65,4 +70,49 @@ export class AppComponent {
     });
   }
 
+  handleToggleUserSelection(id: number) {
+    const isAlreadySelected = this.selectedUserIds.includes(id);
+
+    if(isAlreadySelected) {
+      this.selectedUserIds = this.selectedUserIds.filter(uid => uid !== id);
+    }
+    else {
+      this.selectedUserIds.push(id);
+    }
+  }
+
+  handleClickCount(id: number) {
+    this.products.map((product) => {
+      if(product.id === id) {
+        return {...product, clickCount: product.clickCount++};
+      }
+
+      return product;
+    })
+  }
+
+  handleAddProduct(product: any) {
+    console.log(this.products);
+    if(product) {
+      this.products.push(product);
+    }
+  }
+
+  pickRandomProduct() {
+    const ids = this.products.map((product) => product.id);
+    const randomIndex = Math.floor(Math.random() * ids.length);
+
+    this.targetProductId = ids[randomIndex];
+    this.message = '';
+  }
+
+  handleGuest(id: number) {
+    if(this.targetProductId === null) return;
+
+    if(id === this.targetProductId) {
+      this.message = '🎉 Congratulations You found the product';
+    } else {
+      this.message = '❌ Sorry, You did not found the product';
+    }
+  }
 }
