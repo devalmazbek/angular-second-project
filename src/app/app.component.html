@@ -170,6 +170,7 @@
 </style>
 <app-header></app-header>
 <main>
+  <input type="text" placeholder="Поиск товара" [(ngModel)]="filterTerm">
   <app-add-product
   (onAddProduct)="handleAddProduct($event)">
   </app-add-product>
@@ -200,10 +201,13 @@
     <h5>All users: {{users.length}}</h5>
   </section>
   <section class="grid">
+    <button (click)="toggleSortDirection()">
+      Сортировать: {{ sortDirection === 'asc' ? 'По возрастанию' : 'По убыванию' }}
+    </button>
     <div>
       <h3>products:</h3>
       <app-product-card
-        *ngFor="let product of products"
+        *ngFor="let product of (products | filterProducts:filterTerm | sortByPrice:sortDirection)"
         [id]="product.id"
         [name]="product.name"
         [price]="product.price"
@@ -230,11 +234,31 @@
     <h5>All Products: {{products.length}}</h5>
   </section>
 
+  
+
   <button (click)="handleHighlightAllProduct()">Выделить все товары</button>
 
   <button (click)="pickRandomProduct()">Начать игру "Угадай товар"</button>
   <p *ngIf="targetProductId">Попробуй угадать товар 👀</p>
   <p>{{ message }}</p>
+
+  <section>
+    <h3>todo</h3>
+    <div *ngIf="todos.length > 0; else noTasks">
+      <app-todo
+        *ngFor="let todo of todos"
+        [title]="todo.title"
+        [id]="todo.id"
+        [completed]="todo.completed"
+        (onCompletedClick)="handleToggleTodo($event)"
+      >
+      </app-todo>
+    </div>
+   
+    <ng-template #noTasks>
+      <p>Нет задач!</p>
+    </ng-template>
+  </section>
  
 </main>
 

@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ShortenPipe } from '../shorten.pipe';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ShortenPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })

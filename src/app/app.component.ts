@@ -5,17 +5,32 @@ import { HeaderComponent } from './header/header.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { TodoComponent } from "./todo/todo.component";
+import { FilterProductsPipe } from './filter-products.pipe';
+import { FormsModule } from '@angular/forms';
+import { SortByPricePipe } from './sort-by-price.pipe';
+
+interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, HeaderComponent, UserCardComponent, ProductCardComponent, AddProductComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, UserCardComponent, ProductCardComponent, AddProductComponent, TodoComponent, FilterProductsPipe, FormsModule, SortByPricePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
+
+
 export class AppComponent {
+  filterTerm: string = '';
   title = 'first-project';
   isSelected = false;
   highlightedAll = false;
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   selectedProductId: number | null = null;
   selectedUserIds: number[] = [];
@@ -30,10 +45,17 @@ export class AppComponent {
   ];
 
   products = [
-    { id: 101, name: 'MacBook Air', price: 1299, description: '13-inch laptop from Apple', highlighted: false, clickCount: 0 },
-    { id: 102, name: 'Dell XPS 15', price: 1499, description: 'Powerful Windows laptop', highlighted: false, clickCount: 0 },
-    { id: 103, name: 'Lenovo ThinkPad', price: 999, description: 'Business class laptop', highlighted: false, clickCount: 0 },
+    { id: 101, name: 'MacBook Air', price: 100, description: '13-inch laptop from Apple', highlighted: false, clickCount: 0 },
+    { id: 102, name: 'Dell XPS 15', price: 200, description: 'Powerful Windows laptop', highlighted: false, clickCount: 0 },
+    { id: 103, name: 'Lenovo ThinkPad', price: 300, description: 'Business class laptop', highlighted: false, clickCount: 0 },
   ];
+
+  todos:Todo[] = [
+    { id: 1, title: 'Выучить Angular', completed: false },
+    { id: 2, title: 'Сделать практику', completed: false },
+    { id: 3, title: 'Создать проект', completed: false }
+  ]
+
 
   selectedUser: { id: number, name: string; age: number; email: string } | null = null;
 
@@ -114,5 +136,19 @@ export class AppComponent {
     } else {
       this.message = '❌ Sorry, You did not found the product';
     }
+  }
+
+
+  handleToggleTodo(id: number) {
+    const todo = this.todos.find(t => t.id === id);
+    if (todo) {
+      todo.completed = !todo.completed;
+    } else {
+      console.warn('Задача с id', id, 'не найдена');
+    }
+  }
+
+  toggleSortDirection() {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 }
